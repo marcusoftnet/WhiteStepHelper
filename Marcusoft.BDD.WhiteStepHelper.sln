@@ -8,8 +8,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_lib", "_lib", "{68FA5093-0
 		lib\TechTalk.SpecFlow.Parser.dll = lib\TechTalk.SpecFlow.Parser.dll
 	EndProjectSection
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Marcusoft.BDD.WhiteStepHelper.VB", "Marcusoft.BDD.WhiteStepHelper.VB\Marcusoft.BDD.WhiteStepHelper.VB.vbproj", "{5200BAC3-9A1F-40AF-BB9C-7E9329A1FC3F}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Marcusoft.BDD.WhiteStepHelper.SUT", "Marcusoft.BDD.WhiteStepHelper.SUT\Marcusoft.BDD.WhiteStepHelper.SUT.csproj", "{C624B01B-7AAD-4CEA-AE0C-8C063C62AAC1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Marcusoft.BDD.WhiteStepHelper.Specs", "Marcusoft.BDD.WhiteStepHelper.Specs\Marcusoft.BDD.WhiteStepHelper.Specs.csproj", "{9EA869B5-8952-41F6-9553-1BF6DF668F75}"
@@ -20,6 +18,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Marcusoft.BDD.WhiteStepHelper.vsmdi = Marcusoft.BDD.WhiteStepHelper.vsmdi
 		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Marcusoft.BDD.WhiteStepHelper", "Marcusoft.BDD.WhiteStepHelper\Marcusoft.BDD.WhiteStepHelper.csproj", "{32CD246D-9A79-497C-BBEC-5DA9607A09A7}"
 EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
@@ -34,16 +34,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{5200BAC3-9A1F-40AF-BB9C-7E9329A1FC3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5200BAC3-9A1F-40AF-BB9C-7E9329A1FC3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5200BAC3-9A1F-40AF-BB9C-7E9329A1FC3F}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{5200BAC3-9A1F-40AF-BB9C-7E9329A1FC3F}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{5200BAC3-9A1F-40AF-BB9C-7E9329A1FC3F}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{5200BAC3-9A1F-40AF-BB9C-7E9329A1FC3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5200BAC3-9A1F-40AF-BB9C-7E9329A1FC3F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5200BAC3-9A1F-40AF-BB9C-7E9329A1FC3F}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{5200BAC3-9A1F-40AF-BB9C-7E9329A1FC3F}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{5200BAC3-9A1F-40AF-BB9C-7E9329A1FC3F}.Release|x86.ActiveCfg = Release|Any CPU
 		{C624B01B-7AAD-4CEA-AE0C-8C063C62AAC1}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{C624B01B-7AAD-4CEA-AE0C-8C063C62AAC1}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
 		{C624B01B-7AAD-4CEA-AE0C-8C063C62AAC1}.Debug|Mixed Platforms.Build.0 = Debug|x86
@@ -64,6 +54,16 @@ Global
 		{9EA869B5-8952-41F6-9553-1BF6DF668F75}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{9EA869B5-8952-41F6-9553-1BF6DF668F75}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{9EA869B5-8952-41F6-9553-1BF6DF668F75}.Release|x86.ActiveCfg = Release|Any CPU
+		{32CD246D-9A79-497C-BBEC-5DA9607A09A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32CD246D-9A79-497C-BBEC-5DA9607A09A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32CD246D-9A79-497C-BBEC-5DA9607A09A7}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{32CD246D-9A79-497C-BBEC-5DA9607A09A7}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{32CD246D-9A79-497C-BBEC-5DA9607A09A7}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{32CD246D-9A79-497C-BBEC-5DA9607A09A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32CD246D-9A79-497C-BBEC-5DA9607A09A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32CD246D-9A79-497C-BBEC-5DA9607A09A7}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{32CD246D-9A79-497C-BBEC-5DA9607A09A7}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{32CD246D-9A79-497C-BBEC-5DA9607A09A7}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -80,12 +80,6 @@
     <Compile Include="Steps\ApplicationStart.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Marcusoft.BDD.WhiteStepHelper.VB\Marcusoft.BDD.WhiteStepHelper.VB.vbproj">
-      <Project>{5200BAC3-9A1F-40AF-BB9C-7E9329A1FC3F}</Project>
-      <Name>Marcusoft.BDD.WhiteStepHelper.VB</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="App.config" />
     <None Include="Features\BasicWindow.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
@@ -108,7 +102,12 @@
       <LastGenOutput>WriteInTextBox.feature.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Marcusoft.BDD.WhiteStepHelper\Marcusoft.BDD.WhiteStepHelper.csproj">
+      <Project>{32CD246D-9A79-497C-BBEC-5DA9607A09A7}</Project>
+      <Name>Marcusoft.BDD.WhiteStepHelper</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

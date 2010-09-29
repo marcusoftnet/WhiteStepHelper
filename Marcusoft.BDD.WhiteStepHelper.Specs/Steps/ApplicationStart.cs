@@ -1,5 +1,4 @@
-﻿using Marcusoft.BDD.WhiteStepHelper.VB;
-using TechTalk.SpecFlow;
+﻿using TechTalk.SpecFlow;
 
 namespace Marcusoft.BDD.WhiteStepHelper.Specs.Steps
 {
