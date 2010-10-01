@@ -4,6 +4,7 @@
 *.user
 *.suo
 *.resharper
+*.testsettings
 Thumbs.db
 obj/
 [Bb]in/
