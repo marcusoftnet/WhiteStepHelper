@@ -6,16 +6,16 @@ namespace Marcusoft.BDD.WhiteStepHelper
     /// Reads configuration properties from .config
     /// </summary>
     /// <remarks></remarks>
-    public class TestConfig
+    public static class TestConfig
     {
         public static string ApplicationUnderTestPath
         {
-            get {return ConfigurationManager.AppSettings["ApplicationUnderTestPath"];} 
+            get { return ConfigurationManager.AppSettings["ApplicationUnderTestPath"]; }
         }
 
         public static string MainWindowName
         {
-            get { return ConfigurationManager.AppSettings["MainWindowName"];} 
+            get { return ConfigurationManager.AppSettings["MainWindowName"]; }
         }
     }
 }

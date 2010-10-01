@@ -49,13 +49,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AutomationNameResolver.cs" />
     <Compile Include="BaseSteps.cs" />
+    <Compile Include="AutomationPropertiesNameWellKnowNameResolverExtensions.cs" />
+    <Compile Include="WhiteApplicationExtensions.cs" />
     <Compile Include="WhiteStepBase.cs" />
     <Compile Include="TestConfig.cs" />
-    <Compile Include="SimpleIdResolver.cs" />
-    <Compile Include="IIdResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WhiteWindowExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Marcusoft.BDD.WhiteStepHelper.SUT\Marcusoft.BDD.WhiteStepHelper.SUT.csproj">

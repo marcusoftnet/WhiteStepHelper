@@ -1,22 +1,25 @@
-﻿using TechTalk.SpecFlow;
+﻿using System.IO;
+using System.Reflection;
+using TechTalk.SpecFlow;
 
 namespace Marcusoft.BDD.WhiteStepHelper.Specs.Steps
 {
     [Binding]
     public class ApplicationStart : WhiteStepBase
     {
-        public ApplicationStart() : base(new AutomationNameResolver()) { }
-
         [BeforeTestRun]
         public static void BeforeTestRun()
         {
-            StartWindowInApplication(TestConfig.ApplicationUnderTestPath, TestConfig.MainWindowName);
+            var filePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            filePath = Path.Combine(filePath, TestConfig.ApplicationUnderTestPath);
+            
+            StartApplicationUnderTest(filePath, TestConfig.MainWindowName);
         }
 
         [AfterTestRun]
         public static void AfterTestRun()
         {
-            CloseApplicationUnderTest();
+            SUT.CloseAndSaveState();
         }
 
     }

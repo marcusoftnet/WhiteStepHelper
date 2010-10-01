@@ -66,6 +66,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SelectBox.feature</DependentUpon>
     </Compile>
+    <Compile Include="Features\Tab.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Tab.feature</DependentUpon>
+    </Compile>
     <Compile Include="Features\UsingADialog.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -92,6 +97,10 @@
     <None Include="Features\SelectBox.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>SelectBox.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\Tab.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>Tab.feature.cs</LastGenOutput>
     </None>
     <None Include="Features\UsingADialog.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>

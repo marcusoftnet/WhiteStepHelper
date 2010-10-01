@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using System.Reflection;
 using TechTalk.SpecFlow;
-using White.Core.Factory;
 using White.Core.UIItems;
-using White.Core.UIItems.Finders;
 using White.Core.UIItems.WindowItems;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using White.Core.WindowsAPI;
@@ -20,28 +15,13 @@ namespace Marcusoft.BDD.WhiteStepHelper
     /// <remarks></remarks>
     public abstract class WhiteStepBase
     {
-        private readonly IIdResolver _idResolver;
-
-        private Dictionary<string, IUIItem> _controlDic = new Dictionary<string, IUIItem>();
-
-        /// <summary>
-        /// Constructor that takes an IdResolver to use
-        /// when resolving wellknown-name to id's
-        /// </summary>
-        /// <param name="idResolver">the idResolver to use</param>
-        /// <remarks></remarks>
-        protected WhiteStepBase(IIdResolver idResolver)
-        {
-            _idResolver = idResolver;
-        }
-
         /// <summary>
         /// The application we're currently testing
         /// </summary>
         /// <value></value>
         /// <returns></returns>
         /// <remarks></remarks>
-        protected static White.Core.Application ApplicationUnderTest { get; set; }
+        protected static White.Core.Application SUT { get; private set; }
 
         /// <summary>
         /// The current active window or dialog in the application
@@ -49,30 +29,18 @@ namespace Marcusoft.BDD.WhiteStepHelper
         /// <value></value>
         /// <returns></returns>
         /// <remarks>It's this dialog that the controls are search for</remarks>
-        protected static Window CurrentWindowUnderTest { get; set; }
-
-        /// <summary>
-        /// Starts or attach to the application for the given file name
-        /// </summary>
-        /// <param name="fileName"></param>
-        /// <remarks></remarks>
-        protected static void AttachOrLaunchInRunningCurrentDirectory(string fileName)
-        {
-            var filePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            filePath = Path.Combine(filePath, fileName);
-            ApplicationUnderTest = White.Core.Application.AttachOrLaunch(new ProcessStartInfo(filePath));
-        }
+        protected static Window WindowUnderTest { get; private set; }
 
         /// <summary>
         /// Starts or attach to the application for the given file name
         /// and get hold of the window with the given window title
         /// </summary>
-        /// <param name="fileName"></param>
-        /// <param name="windowTitle"></param>
+        /// <param name="filePath">path to the executable to test</param>
+        /// <param name="windowTitle">the title of the first window in the application</param>
         /// <remarks></remarks>
-        protected static void StartWindowInApplication(string fileName, string windowTitle)
+        protected static void StartApplicationUnderTest(string filePath, string windowTitle)
         {
-            AttachOrLaunchInRunningCurrentDirectory(fileName);
+            SUT = White.Core.Application.AttachOrLaunch(new ProcessStartInfo(filePath));
             SetWindowUnderTest(windowTitle);
         }
 
@@ -83,93 +51,20 @@ namespace Marcusoft.BDD.WhiteStepHelper
         /// <remarks></remarks>
         protected static void SetWindowUnderTest(string windowTitle)
         {
-            try
-            {
-                CurrentWindowUnderTest = ApplicationUnderTest.GetWindow(windowTitle, InitializeOption.WithCache.AndIdentifiedBy(windowTitle));
-            }
-            catch (Exception ex)
-            {
-                var message = string.Format("Cannot find a window with the title '{0}', in the application '{1}'", windowTitle, ApplicationUnderTest.Name);
-                throw new ArgumentException(message);
-            }
+            WindowUnderTest = SUT.GetWindowByTitle(windowTitle);
         }
 
         /// <summary>
-        /// Returns the dialog with the title
-        /// displayed from the CurrentWindowUnderTest
+        /// Sets the window under test to the window 
         /// </summary>
-        /// <param name="dialogTitle">the title of the dialog</param>
-        /// <returns>the dialog window</returns>
+        /// <param name="window">the new window to be under test</param>
         /// <remarks></remarks>
-        protected Window GetModalDialogByTitle(string dialogTitle)
+        protected static void SetWindowUnderTest(Window window)
         {
-            var dialog = CurrentWindowUnderTest.ModalWindow(dialogTitle);
-
-            var message = string.Format("No dialog with title {0} found", dialogTitle);
-            Assert.IsNotNull(dialog, message);
-
-            CurrentWindowUnderTest = dialog;
-            return dialog;
+            WindowUnderTest = window;
         }
 
-        /// <summary>
-        /// Returns true if the application under test is running
-        /// </summary>
-        /// <returns></returns>
-        /// <remarks></remarks>
-        protected static bool IsApplicationUnderTestRunning
-        {
-            get
-            {
-                return ApplicationUnderTest != null & ApplicationUnderTest.HasExited == false;
-            }
-        }
 
-        /// <summary>
-        /// Closes the application under test
-        /// </summary>
-        /// <remarks></remarks>
-        protected static void CloseApplicationUnderTest()
-        {
-            if (IsApplicationUnderTestRunning)
-            {
-                ApplicationUnderTest.KillAndSaveState();
-            }
-        }
-
-        /// <summary>
-        /// Returns the control with the wellknown name sent to the function
-        /// The wellknown name is resolved using the current IdResolver
-        /// </summary>
-        /// <param name="wellKnownName">wellknown name of control</param>
-        /// <returns>the control with the wellknown name</returns>
-        /// <remarks></remarks>
-        protected IUIItem GetControl(string wellKnownName)
-        {
-            var id = _idResolver.IdFromWellKnownName(wellKnownName, CurrentWindowUnderTest);
-            var c = CurrentWindowUnderTest.Get(SearchCriteria.ByAutomationId(id));
-
-            Assert.IsNotNull(c, string.Format("Could not find a control of with well-known name {0} (translated id: {1})", wellKnownName, id));
-            return c;
-        }
-
-        /// <summary>
-        /// Returns the control with the wellknown name sent to the function
-        /// The wellknown name is resolved using the current IdResolver
-        /// </summary>
-        /// <typeparam name="T">the type of the control to return</typeparam>
-        /// <param name="wellKnownName">wellknown name of control</param>
-        /// <returns>the control with the wellknown name</returns>
-        /// <remarks></remarks>
-        protected T GetControl<T>(string wellKnownName) where T : UIItem
-        {
-            var id = _idResolver.IdFromWellKnownName(wellKnownName, CurrentWindowUnderTest);
-            var c = CurrentWindowUnderTest.Get<T>(id);
-
-            Assert.IsNotNull(c, string.Format("Could not find a control of type '{2}' of with well-known name {0} (translated id: {1})", wellKnownName, id, typeof(T).Name));
-            return (T)c;
-        }
-        
         /// <summary>
         /// Returns the node with the given text in the tree
         /// </summary>
@@ -179,7 +74,7 @@ namespace Marcusoft.BDD.WhiteStepHelper
         /// <remarks></remarks>
         protected TreeNode NodeInTree(string wellKnownTreeName, string nodeText)
         {
-            var treeControl = GetControl<Tree>(wellKnownTreeName);
+            var treeControl = WindowUnderTest.GetControlByWellKnownName<Tree>(wellKnownTreeName);
             var node = FindTreeNodeByText(treeControl.Nodes, nodeText);
 
             Assert.IsNotNull(node, string.Format("Could not find node with text {1} in tree {0}", wellKnownTreeName, nodeText));
@@ -195,7 +90,7 @@ namespace Marcusoft.BDD.WhiteStepHelper
         /// <remarks></remarks>
         protected void Assert_NodeNotInTree(string wellKnownTreeName, string nodeText)
         {
-            var tree = GetControl<Tree>(wellKnownTreeName);
+            var tree = WindowUnderTest.GetControlByWellKnownName<Tree>(wellKnownTreeName);
 
             Assert.IsNull(FindTreeNodeByText(tree.Nodes, nodeText));
         }
@@ -209,7 +104,7 @@ namespace Marcusoft.BDD.WhiteStepHelper
         /// <remarks></remarks>
         protected int NodeLevelForNodeInTree(string wellKnownTreeName, string nodeText)
         {
-            var tree = GetControl<Tree>(wellKnownTreeName);
+            var tree = WindowUnderTest.GetControlByWellKnownName<Tree>(wellKnownTreeName);
             var nodeForText = NodeInTree(wellKnownTreeName, nodeText);
 
             return tree.GetPathTo(nodeForText).Count;
@@ -222,7 +117,7 @@ namespace Marcusoft.BDD.WhiteStepHelper
         /// <remarks></remarks>
         protected void PressKey(KeyboardInput.SpecialKeys keys)
         {
-            CurrentWindowUnderTest.Keyboard.HoldKey(KeyboardInput.SpecialKeys.RIGHT);
+            WindowUnderTest.Keyboard.HoldKey(KeyboardInput.SpecialKeys.RIGHT);
         }
 
         /// <summary>
@@ -233,7 +128,7 @@ namespace Marcusoft.BDD.WhiteStepHelper
         /// <remarks></remarks>
         protected void SelectRowInListView(string wellKnownListViewName, int rowIndex)
         {
-            var listView = GetControl<ListView>(wellKnownListViewName);
+            var listView = WindowUnderTest.GetControlByWellKnownName<ListView>(wellKnownListViewName);
             var indexToSelect = rowIndex;
             listView.Rows[indexToSelect].Select();
         }
@@ -246,10 +141,10 @@ namespace Marcusoft.BDD.WhiteStepHelper
         /// <remarks></remarks>
         protected void Assert_SelectedNodeHasNodeText(string wellKnownTreeName, string expectedTextOfSelectedNode)
         {
-            var n = GetControl<Tree>(wellKnownTreeName).SelectedNode;
+            var n = WindowUnderTest.GetControlByWellKnownName<Tree>(wellKnownTreeName).SelectedNode;
             Assert.AreEqual(expectedTextOfSelectedNode, n.Text);
         }
-        
+
         /// <summary>
         /// Asserts that the label has the expected text
         /// </summary>
@@ -258,7 +153,7 @@ namespace Marcusoft.BDD.WhiteStepHelper
         /// <remarks></remarks>
         protected void Assert_LabelTextContains(string wellKnownName, string expectedText)
         {
-            var lbl = GetControl<Label>(wellKnownName);
+            var lbl = WindowUnderTest.GetControlByWellKnownName<Label>(wellKnownName);
             Assert.AreEqual(expectedText, lbl.Text);
         }
 
@@ -270,14 +165,14 @@ namespace Marcusoft.BDD.WhiteStepHelper
         /// <remarks></remarks>
         protected void Assert_TreeHasTopLevelNodes(string wellKnownName, List<string> nodeNames)
         {
-            var tree = GetControl<Tree>(wellKnownName);
+            var tree = WindowUnderTest.GetControlByWellKnownName<Tree>(wellKnownName);
 
             foreach (var nodeName in nodeNames)
             {
                 Assert.IsTrue(tree.HasNode(nodeName.Trim()));
             }
         }
-        
+
         /// <summary>
         /// Asserts that the tree has the expected number of nodes
         /// </summary>
@@ -286,9 +181,9 @@ namespace Marcusoft.BDD.WhiteStepHelper
         /// <remarks></remarks>
         protected void Assert_NumberOfNodesInTree(int expectedNumberOfNodes, string wellKnownTreeName)
         {
-            Assert.AreEqual(expectedNumberOfNodes, GetControl<Tree>(wellKnownTreeName).Nodes.Count);
+            Assert.AreEqual(expectedNumberOfNodes, WindowUnderTest.GetControlByWellKnownName<Tree>(wellKnownTreeName).Nodes.Count);
         }
-        
+
         /// <summary>
         /// Asserts that the control of the given typen and name is present on the 
         /// current window under test
@@ -298,7 +193,7 @@ namespace Marcusoft.BDD.WhiteStepHelper
         /// <remarks></remarks>
         protected void Assert_ControlOfTypeIsPresentOnWindowUnderTest<T>(string wellKnownName) where T : UIItem
         {
-            Assert.IsNotNull(GetControl<T>(wellKnownName));
+            Assert.IsNotNull(WindowUnderTest.GetControlByWellKnownName<T>(wellKnownName));
         }
 
         /// <summary>
@@ -309,10 +204,10 @@ namespace Marcusoft.BDD.WhiteStepHelper
         /// <remarks></remarks>
         protected void Assert_NumberOfRowsInList(string wellKnownNameOfList, int expectedNumberOfRows)
         {
-            var listView = GetControl<ListView>(wellKnownNameOfList);
+            var listView = WindowUnderTest.GetControlByWellKnownName<ListView>(wellKnownNameOfList);
             Assert.AreEqual(expectedNumberOfRows, listView.Rows.Count);
         }
-        
+
         /// <summary> 
         /// Asserts that the text for the cell contains the expected text 
         /// </summary> 
@@ -323,9 +218,9 @@ namespace Marcusoft.BDD.WhiteStepHelper
         /// <remarks></remarks> 
         protected void Assert_CellOnRowInListContainsValue(string wellKnownListName, int rowNumber, int columnNumber, string expectedValue)
         {
-            Assert.AreEqual(expectedValue, GetCellText(wellKnownListName, rowNumber, columnNumber, GetControl<ListView>(wellKnownListName)));
+            Assert.AreEqual(expectedValue, GetCellText(wellKnownListName, rowNumber, columnNumber, WindowUnderTest.GetControlByWellKnownName<ListView>(wellKnownListName)));
         }
-        
+
         /// <summary> 
         /// Asserts that the row with the given number is the selected row 
         /// of the listview with the well known name 
@@ -335,7 +230,7 @@ namespace Marcusoft.BDD.WhiteStepHelper
         /// <remarks></remarks> 
         protected void Assert_RowIsSelectedRow(string wellKnownListViewName, int rowNumber)
         {
-            var listView = GetControl<ListView>(wellKnownListViewName);
+            var listView = WindowUnderTest.GetControlByWellKnownName<ListView>(wellKnownListViewName);
 
             var expectedSelectedRow = GetRowByRowNumber(wellKnownListViewName, rowNumber, listView);
             var expectedSelectedCell = GetCellByColumnNumber(wellKnownListViewName, rowNumber, 1, expectedSelectedRow);
@@ -355,7 +250,7 @@ namespace Marcusoft.BDD.WhiteStepHelper
         /// <remarks></remarks>
         protected void Assert_RowHasTableData(string wellKnownListName, int rowNumber, Table expectedData)
         {
-            var listView = GetControl<ListView>(wellKnownListName);
+            var listView = WindowUnderTest.GetControlByWellKnownName<ListView>(wellKnownListName);
             var rowFromGUI = listView.Rows[rowNumber - 1];
 
             foreach (var expectedRowFromStep in expectedData.Rows)
@@ -402,7 +297,7 @@ namespace Marcusoft.BDD.WhiteStepHelper
 
             return listView.SelectedRows;
         }
-        
+
         private static ListViewCell GetCellInGUIByName(string wellKnownListName, ListViewRow rowInGUI, string columnName)
         {
             var cellFromGUI = rowInGUI.Cells[columnName];
