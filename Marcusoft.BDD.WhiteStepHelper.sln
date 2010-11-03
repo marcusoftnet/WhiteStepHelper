@@ -1,11 +1,26 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_lib", "_lib", "{68FA5093-03D0-4387-A056-CEA2FC914C96}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lib", "lib", "{68FA5093-03D0-4387-A056-CEA2FC914C96}"
 	ProjectSection(SolutionItems) = preProject
+		lib\Bricks.dll = lib\Bricks.dll
+		lib\Bricks.RuntimeFramework.dll = lib\Bricks.RuntimeFramework.dll
+		lib\Castle.Core.dll = lib\Castle.Core.dll
+		lib\Castle.DynamicProxy2.dll = lib\Castle.DynamicProxy2.dll
+		lib\log4net.dll = lib\log4net.dll
+		lib\nunit.framework.dll = lib\nunit.framework.dll
 		lib\TechTalk.SpecFlow.dll = lib\TechTalk.SpecFlow.dll
-		lib\TechTalk.SpecFlow.Generator.dll = lib\TechTalk.SpecFlow.Generator.dll
-		lib\TechTalk.SpecFlow.Parser.dll = lib\TechTalk.SpecFlow.Parser.dll
+		lib\White.Core.dll = lib\White.Core.dll
+		lib\White.CustomControls.dll = lib\White.CustomControls.dll
+		lib\White.CustomControls.Peers.dll = lib\White.CustomControls.Peers.dll
+		lib\White.CustomControls.Peers.Silverlight.dll = lib\White.CustomControls.Peers.Silverlight.dll
+		lib\White.CustomControls.Silverlight.dll = lib\White.CustomControls.Silverlight.dll
+		lib\White.NUnit.dll = lib\White.NUnit.dll
+		lib\White.Recorder.exe = lib\White.Recorder.exe
+		lib\White.Reporting.dll = lib\White.Reporting.dll
+		lib\White.Repository.dll = lib\White.Repository.dll
+		lib\White.WebBrowser.dll = lib\White.WebBrowser.dll
+		lib\Xstream.Core.dll = lib\Xstream.Core.dll
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Marcusoft.BDD.WhiteStepHelper.SUT", "Marcusoft.BDD.WhiteStepHelper.SUT\Marcusoft.BDD.WhiteStepHelper.SUT.csproj", "{C624B01B-7AAD-4CEA-AE0C-8C063C62AAC1}"

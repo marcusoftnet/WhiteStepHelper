@@ -37,5 +37,6 @@ namespace Marcusoft.BDD.WhiteStepHelper.SUT
         {
             txtResult.Text = "You clicked the Test button"; 
         }
+
     }
 }

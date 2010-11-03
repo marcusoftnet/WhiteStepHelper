@@ -41,7 +41,7 @@ namespace Marcusoft.BDD.WhiteStepHelper
             {
                 w = instance.GetWindow(title, InitializeOption.WithCache.AndIdentifiedBy(title));
             }
-            catch (Exception ex)
+            catch
             {
                 var message = string.Format("Cannot find a window with the title '{0}' in the application '{1}'", title, instance.Name);
                 throw new AutomationElementSearchException(message);

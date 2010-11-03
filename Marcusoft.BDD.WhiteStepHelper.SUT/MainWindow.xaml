@@ -15,9 +15,24 @@
             <ComboBoxItem Content="Item 5" />
         </ComboBox>
         <Button Content="Open new dialog" Height="23" HorizontalAlignment="Left" Margin="12,144,0,0" Name="btnNewDialog" AutomationProperties.Name="New dialog button" VerticalAlignment="Top" Width="123" Click="btnNewDialog_Click" />
-        <TabControl Height="100" HorizontalAlignment="Left" AutomationProperties.Name="Main tabsystem" Margin="12,199,0,0" Name="tabControl1" VerticalAlignment="Top" Width="464">
+        <TabControl Height="224" HorizontalAlignment="Left" AutomationProperties.Name="Main tabsystem" Margin="12,199,0,0" Name="tabControl1" VerticalAlignment="Top" Width="464">
             <TabItem Header="Tree" Name="tabTree">
-                <Grid />
+                <Grid Height="180">
+                    <TreeView AutomationProperties.Name="Test tree" Height="181" HorizontalAlignment="Left" Margin="0,-1,0,0" Name="treeView1" VerticalAlignment="Top" Width="358">
+                        <TreeViewItem Header="Item 1" IsExpanded="True">
+                            <TreeViewItem Header="Item 2" />
+                            <TreeViewItem Header="Item 3" />
+                        </TreeViewItem>
+                        <TreeViewItem Header="Item 4">
+                            <TreeViewItem Header="Item 5">
+                                <TreeViewItem Header="Item 6" />
+                            </TreeViewItem>
+                        </TreeViewItem>
+                        <TreeViewItem Header="Item 7" />
+                        <TreeViewItem Header="Item 8" />
+                        <TreeViewItem Header="Item 9" />
+                    </TreeView>
+                </Grid>
             </TabItem>
             <TabItem Header="List" Name="tabList">
                 <Grid Height="204" Width="470" />

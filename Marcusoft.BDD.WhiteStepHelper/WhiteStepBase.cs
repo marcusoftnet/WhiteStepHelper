@@ -65,50 +65,6 @@ namespace Marcusoft.BDD.WhiteStepHelper
         }
 
 
-        /// <summary>
-        /// Returns the node with the given text in the tree
-        /// </summary>
-        /// <param name="wellKnownTreeName">the wellknown name of the tree</param>
-        /// <param name="nodeText">the text of the node</param>
-        /// <returns>the node with the given text in the tree</returns>
-        /// <remarks></remarks>
-        protected TreeNode NodeInTree(string wellKnownTreeName, string nodeText)
-        {
-            var treeControl = WindowUnderTest.GetControlByWellKnownName<Tree>(wellKnownTreeName);
-            var node = FindTreeNodeByText(treeControl.Nodes, nodeText);
-
-            Assert.IsNotNull(node, string.Format("Could not find node with text {1} in tree {0}", wellKnownTreeName, nodeText));
-
-            return node;
-        }
-
-        /// <summary>
-        /// Asserts that the node with given text is not in the given tree
-        /// </summary>
-        /// <param name="wellKnownTreeName">the wellknown-name of the tree to search</param>
-        /// <param name="nodeText">the text of the node</param>
-        /// <remarks></remarks>
-        protected void Assert_NodeNotInTree(string wellKnownTreeName, string nodeText)
-        {
-            var tree = WindowUnderTest.GetControlByWellKnownName<Tree>(wellKnownTreeName);
-
-            Assert.IsNull(FindTreeNodeByText(tree.Nodes, nodeText));
-        }
-
-        /// <summary>
-        /// Returns the level where the node is present
-        /// </summary>
-        /// <param name="wellKnownTreeName">the name of the tree</param>
-        /// <param name="nodeText">the text of the node</param>
-        /// <returns>the level where the node is present</returns>
-        /// <remarks></remarks>
-        protected int NodeLevelForNodeInTree(string wellKnownTreeName, string nodeText)
-        {
-            var tree = WindowUnderTest.GetControlByWellKnownName<Tree>(wellKnownTreeName);
-            var nodeForText = NodeInTree(wellKnownTreeName, nodeText);
-
-            return tree.GetPathTo(nodeForText).Count;
-        }
 
         /// <summary>
         /// Presses the sent-in specialkey in the current window
@@ -173,16 +129,6 @@ namespace Marcusoft.BDD.WhiteStepHelper
             }
         }
 
-        /// <summary>
-        /// Asserts that the tree has the expected number of nodes
-        /// </summary>
-        /// <param name="expectedNumberOfNodes">the expected number of nodes</param>
-        /// <param name="wellKnownTreeName">the well known name of the tree</param>
-        /// <remarks></remarks>
-        protected void Assert_NumberOfNodesInTree(int expectedNumberOfNodes, string wellKnownTreeName)
-        {
-            Assert.AreEqual(expectedNumberOfNodes, WindowUnderTest.GetControlByWellKnownName<Tree>(wellKnownTreeName).Nodes.Count);
-        }
 
         /// <summary>
         /// Asserts that the control of the given typen and name is present on the 
@@ -307,26 +253,7 @@ namespace Marcusoft.BDD.WhiteStepHelper
             return cellFromGUI;
         }
 
-        private static TreeNode FindTreeNodeByText(TreeNodes nodesToSearch, string nodeText)
-        {
-            TreeNode nodeToReturn = null;
-
-            foreach (var node in nodesToSearch)
-            {
-                if (node.Text == nodeText)
-                {
-                    nodeToReturn = node;
-                    break;
-                }
-
-                if ((node.Nodes.Count > 0))
-                {
-                    nodeToReturn = FindTreeNodeByText(node.Nodes, nodeText);
-                }
-            }
-
-            return nodeToReturn;
-        }
+        
 
     }
 }

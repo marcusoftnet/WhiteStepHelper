@@ -3,6 +3,7 @@ using TechTalk.SpecFlow;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using White.Core.UIItems;
 using White.Core.UIItems.TabItems;
+using White.Core.UIItems.TreeItems;
 
 namespace Marcusoft.BDD.WhiteStepHelper
 {
@@ -95,6 +96,7 @@ namespace Marcusoft.BDD.WhiteStepHelper
         // <param name="wellKnownLabelName">the wellknown name of the label</param>
         // <param name="expectedText">the text to expect</param>
         // <remarks></remarks>
+        [Given(@"that the label '(.*)' contains the text '(.*)'")]
         [Then(@"the label '(.*)' should contain the text '(.*)'")]
         protected void Assert_LabelContainsText(string wellKnownLabelName, string expectedText)
         {
@@ -122,6 +124,7 @@ namespace Marcusoft.BDD.WhiteStepHelper
         // <param name="wellKnownName">the well known name of the control</param>
         // <remarks></remarks>
         [Given(@"that the control '(.*)' is shown")]
+        [Then(@"the control '(.*)' should be shown")]
         public void ControlIsPresentAndEnabled(string wellKnownName)
         {
             var c = WindowUnderTest.GetControlByWellKnownName(wellKnownName);
@@ -151,7 +154,7 @@ namespace Marcusoft.BDD.WhiteStepHelper
         // <param name="wellKnownSelectBoxName">the wellknown name of the selectbox</param>
         // <remarks></remarks>
         [When(@"I select '(.*)' in the selectbox '(.*)'")]
-        public void WhenISelectItem2InTheSelectboxTestSelectbox(string itemTextToSelect, string wellKnownSelectBoxName)
+        public void SelectInSelectBox(string itemTextToSelect, string wellKnownSelectBoxName)
         {
             WindowUnderTest.GetControlByWellKnownName<ComboBox>(wellKnownSelectBoxName).Select(itemTextToSelect);
         }
@@ -205,6 +208,66 @@ namespace Marcusoft.BDD.WhiteStepHelper
         {
             var tabControl = WindowUnderTest.GetControlByWellKnownName<Tab>(tabControlWellKnownName);
             Assert.AreEqual(expectedSelectedTabTitle, tabControl.SelectedTab.Name);
+        }
+
+        /// <summary>
+        /// Asserts that the tree has the expected number of nodes
+        /// </summary>
+        /// <param name="expectedNumberOfNodes">the expected number of nodes</param>
+        /// <param name="wellKnownTreeName">the well known name of the tree</param>
+        /// <remarks></remarks>
+        [Given(@"that the tree '(.*)' should have (\d+) top level nodes")]
+        [Then(@"the tree '(.*)' should have (\d+) nodes top level nodes")]
+        protected void Assert_NumberOfNodesInTree(string wellKnownTreeName, int expectedNumberOfNodes)
+        {
+            var tree = WindowUnderTest.GetControlByWellKnownName<Tree>(wellKnownTreeName);
+            Assert.AreEqual(expectedNumberOfNodes, tree.Nodes.Count);
+        }
+
+        /// <summary>
+        /// Expands the node with the given text
+        /// </summary>
+        /// <param name="nodeText">the text of the node to expand</param>
+        /// <param name="wellKnownTreeName">the wellknown name of the tree</param>
+        [When(@"I expand the node '(.*)' in tree '(.*)'")]
+        public void ExpandTreeNode(string nodeText, string wellKnownTreeName)
+        {
+            var tree = WindowUnderTest.GetControlByWellKnownName<Tree>(wellKnownTreeName);
+            tree.GetNodeByName(nodeText).Expand();
+        }
+
+        /// <summary>
+        /// Expands the node with the given text
+        /// </summary>
+        /// <param name="nodeText">the text of the node to expand</param>
+        /// <param name="wellKnownTreeName">the wellknown name of the tree</param>
+        [When(@"I collapse the node '(.*)' in tree '(.*)'")]
+        public void Collapse(string nodeText, string wellKnownTreeName)
+        {
+            var tree = WindowUnderTest.GetControlByWellKnownName<Tree>(wellKnownTreeName);
+            tree.GetNodeByName(nodeText).Collapse();
+        }
+
+        /// <summary>
+        /// Asserts that the node has the expected number of subnodes
+        /// </summary>
+        /// <param name="nodeText">the node text to look for</param>
+        /// <param name="wellKnownTreeName">the tree to look in</param>
+        /// <param name="expectedNumberOfSubnodes">the expected number of subnodes</param>
+        [Given(@"that the node '(.*)' in tree '(.*)' has (\d+) subnodes")]
+        [Then(@"the node '(.*)' in tree '(.*)' has (\d+) subnodes")]
+        public void Assert_NodeHasNumberOfSubNodes(string nodeText, string wellKnownTreeName, int expectedNumberOfSubnodes)
+        {
+            var tree = WindowUnderTest.GetControlByWellKnownName<Tree>(wellKnownTreeName);
+            var node = tree.GetNodeByName(nodeText);
+            Assert.AreEqual(expectedNumberOfSubnodes, node.Nodes.Count);
+        }
+
+        [When(@"I expand down to '(.*)' in tree '(.*)'")]
+        public void ExpandDownToNode(string nodeText,string wellKnownTreeName)
+        {
+            var tree = WindowUnderTest.GetControlByWellKnownName<Tree>(wellKnownTreeName);
+            tree.GetNodeByName(nodeText);
         }
     }
 }

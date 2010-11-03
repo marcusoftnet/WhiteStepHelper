@@ -6,7 +6,17 @@
 Background:
 	Given that the application is started
 
-Scenario: Write in textbox
-	When I write 'My test string' in the textbox 'Test textbox'
-	Then the text in textbox 'Test textbox' should be 'My test string'
+Scenario Outline: Write in textbox
+	When I write '<textstring>' in the textbox '<textboxnamn>'
+	Then the text in textbox '<textboxnamn>' should be '<textstring>'
+Examples:
+	| textstring | textboxnamn |
+	| 123		 |Test textbox |
+	| 123		 |Test textbox |
+	| 123		 |Test textbox |
+	| 123		 |Test textbox |
+	| 123		 |Test textbox |
+	| 123		 |Test textbox |
+	| 123		 |Test textbox |
+	
 
