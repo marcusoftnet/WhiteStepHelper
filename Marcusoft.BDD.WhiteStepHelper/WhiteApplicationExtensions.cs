@@ -1,5 +1,4 @@
-﻿using System;
-using White.Core;
+﻿using White.Core;
 using White.Core.AutomationElementSearch;
 using White.Core.Factory;
 using White.Core.UIItems.WindowItems;
@@ -10,7 +9,7 @@ namespace Marcusoft.BDD.WhiteStepHelper
     /// Extension methods for the White application class
     /// </summary>
     public static class WhiteApplicationExtensions
-    {
+    { 
 
         /// <summary>
         /// Returns true if the application is still running
